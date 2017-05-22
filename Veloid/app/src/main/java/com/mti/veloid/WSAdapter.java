@@ -35,7 +35,6 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
     public void onBindViewHolder(WSAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.getTv_name().setText(mFilteredList.get(i).getFields().getName());
-        //viewHolder.getIv_status().setImageDrawable("@drawable/ic_search");
         if (mFilteredList.get(i).getFields().getStatus().equals("CLOSED"))
             viewHolder.getIv_status().setImageResource(android.R.drawable.presence_busy);
         else if (mFilteredList.get(i).getFields().getAvailable_bikes() == 0)
@@ -63,10 +62,10 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     ArrayList<VelibStation> filteredList = new ArrayList<>();
 
-                    for (VelibStation velibVersion : mArrayList) {
+                    for (VelibStation velib : mArrayList) {
 
-                        if (velibVersion.getFields().getName().toLowerCase().contains(charString) || velibVersion.getFields().getStatus().equals("OPEN")) {
-                            filteredList.add(velibVersion);
+                        if (velib.getFields().getAddress().toLowerCase().contains(charString) /*|| velib.getFields().getStatus().equals("OPEN")*/) {
+                            filteredList.add(velib);
                         }
                     }
 
