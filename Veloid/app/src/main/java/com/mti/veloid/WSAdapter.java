@@ -4,6 +4,7 @@ package com.mti.veloid;
  * Created by TheTrope on 22/05/2017.
  */
 
+        import android.graphics.drawable.Drawable;
         import android.support.v7.widget.RecyclerView;
         import android.view.LayoutInflater;
         import android.view.View;
@@ -34,7 +35,11 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
     public void onBindViewHolder(WSAdapter.ViewHolder viewHolder, int i) {
 
         viewHolder.getTv_name().setText(mFilteredList.get(i).getFields().getName());
-        //viewHolder.getIv_status().setBackgroundResource();
+        //viewHolder.getIv_status().setImageDrawable("@drawable/ic_search");
+        if (mFilteredList.get(i).getFields().getStatus().equals("CLOSED"))
+            viewHolder.getIv_status().setImageResource(android.R.drawable.presence_busy);
+        else if (mFilteredList.get(i).getFields().getAvailable_bikes() == 0)
+            viewHolder.getIv_status().setImageResource(android.R.drawable.presence_away);
     }
 
     @Override
@@ -60,7 +65,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     for (VelibStation velibVersion : mArrayList) {
 
-                        if (velibVersion.getFields().getName().toLowerCase().contains(charString) || velibVersion.getFields().getStatus() == "OPEN") {
+                        if (velibVersion.getFields().getName().toLowerCase().contains(charString) || velibVersion.getFields().getStatus().equals("OPEN")) {
                             filteredList.add(velibVersion);
                         }
                     }
