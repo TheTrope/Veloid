@@ -6,9 +6,9 @@ package com.mti.veloid;
 
 public class JSONResponse {
 
-    private VelibStation[] velibStations;
+    private VelibStation[] records;
 
-    public VelibStation[] getVelibStations() {
-        return velibStations;
+    public VelibStation[] getRecords() {
+        return records;
     }
 }

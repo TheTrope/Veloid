@@ -54,11 +54,14 @@ public class ListStation extends AppCompatActivity {
         call.enqueue(new Callback<JSONResponse>() {
             @Override
             public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-
-                JSONResponse jsonResponse = response.body();
-                mArrayList = new ArrayList<>(Arrays.asList(jsonResponse.getVelibStations()));
-                mAdapter = new WSAdapter(mArrayList);
-                mRecyclerView.setAdapter(mAdapter);
+                if (response.isSuccessful()) {
+                    JSONResponse jsonResponse = response.body();
+                    mArrayList = new ArrayList<>(Arrays.asList(jsonResponse.getRecords()));
+                    mAdapter = new WSAdapter(mArrayList);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    //Error
+                }
             }
 
             @Override

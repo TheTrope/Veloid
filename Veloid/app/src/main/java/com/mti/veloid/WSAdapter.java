@@ -33,7 +33,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
     @Override
     public void onBindViewHolder(WSAdapter.ViewHolder viewHolder, int i) {
 
-        viewHolder.getTv_name().setText(mFilteredList.get(i).getName());
+        viewHolder.getTv_name().setText(mFilteredList.get(i).getFields().getName());
         //viewHolder.getIv_status().setBackgroundResource();
     }
 
@@ -60,8 +60,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     for (VelibStation velibVersion : mArrayList) {
 
-                        if (velibVersion.getName().toLowerCase().contains(charString) || velibVersion.getStatus()) {
-
+                        if (velibVersion.getFields().getName().toLowerCase().contains(charString) || velibVersion.getFields().getStatus() == "OPEN") {
                             filteredList.add(velibVersion);
                         }
                     }
