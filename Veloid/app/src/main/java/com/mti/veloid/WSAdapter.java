@@ -37,12 +37,12 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
     @Override
     public void onBindViewHolder(WSAdapter.ViewHolder viewHolder, int i) {
-
         viewHolder.getTv_name().setText(mFilteredList.get(i).getFields().getName());
         if (mFilteredList.get(i).getFields().getStatus().equals("CLOSED"))
             viewHolder.getIv_status().setImageResource(android.R.drawable.presence_busy);
         else if (mFilteredList.get(i).getFields().getAvailable_bikes() == 0)
             viewHolder.getIv_status().setImageResource(android.R.drawable.presence_away);
+        viewHolder.setIsRecyclable(false);
     }
 
     @Override
@@ -106,13 +106,6 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     Context context = v.getContext();
                     Intent intent = new Intent(context, StationTab.class);
-                    /*intent.putExtra("name", velib.getFields().getName());
-                    intent.putExtra("status", velib.getFields().getStatus());
-                    intent.putExtra("bike_stands", velib.getFields().getBike_stands());
-                    intent.putExtra("available_bike_stands", velib.getFields().getAvailable_bike_stands());
-                    intent.putExtra("address", velib.getFields().getAddress());
-                    intent.putExtra("last_update", velib.getFields().getLast_update());*/
-
                     intent.putExtra("position", realPos);
 
                     context.startActivity(intent);

@@ -133,7 +133,7 @@ public class StationTab extends AppCompatActivity {
             tv_last_update = (TextView)rootView.findViewById(R.id.tv_last_update);
 
             tv_name.setText(velibs.get(pos).getFields().getName());
-            tv_bikes.setText(velibs.get(pos).getFields().getAvailable_bike_stands()
+            tv_bikes.setText(velibs.get(pos).getFields().getAvailable_bikes()
             + "/" + velibs.get(pos).getFields().getBike_stands());
             tv_address.setText(velibs.get(pos).getFields().getAddress());
             tv_last_update.setText(velibs.get(pos).getFields().getLast_update());
