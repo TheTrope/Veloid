@@ -4,6 +4,8 @@ package com.mti.veloid;
  * Created by TheTrope on 22/05/2017.
  */
 
+        import android.content.Context;
+        import android.content.Intent;
         import android.graphics.drawable.Drawable;
         import android.support.v7.widget.RecyclerView;
         import android.view.LayoutInflater;
@@ -13,10 +15,11 @@ package com.mti.veloid;
         import android.widget.Filterable;
         import android.widget.ImageView;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import java.util.ArrayList;
 
-public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implements Filterable {
+public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implements Filterable{
     private ArrayList<VelibStation> mArrayList;
     private ArrayList<VelibStation> mFilteredList;
 
@@ -64,7 +67,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     for (VelibStation velib : mArrayList) {
 
-                        if (velib.getFields().getAddress().toLowerCase().contains(charString) /*|| velib.getFields().getStatus().equals("OPEN")*/) {
+                        if (velib.getFields().getAddress().toLowerCase().contains(charString)) {
                             filteredList.add(velib);
                         }
                     }
@@ -94,6 +97,23 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
             tv_name = (TextView)view.findViewById(R.id.tv_name);
             iv_status = (ImageView)view.findViewById(R.id.iv_status);
 
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    VelibStation velib = mArrayList.get(position);
+
+                    Context context = v.getContext();
+                    Intent intent = new Intent(context, StationTab.class);
+                    intent.putExtra("name", velib.getFields().getName());
+                    intent.putExtra("status", velib.getFields().getStatus());
+                    intent.putExtra("bike_stands", velib.getFields().getBike_stands());
+                    intent.putExtra("available_bike_stands", velib.getFields().getAvailable_bike_stands());
+                    intent.putExtra("address", velib.getFields().getAddress());
+                    intent.putExtra("last_update", velib.getFields().getLast_update());
+                    context.startActivity(intent);
+                }
+            });
 
         }
 
@@ -112,6 +132,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
         public void setIv_status(ImageView iv_status) {
             this.iv_status = iv_status;
         }
+
     }
 
 }
