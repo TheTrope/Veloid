@@ -16,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class StationTab extends AppCompatActivity {
@@ -52,6 +54,8 @@ public class StationTab extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setCurrentItem(getIntent().getIntExtra("position", 0));
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -99,6 +103,8 @@ public class StationTab extends AppCompatActivity {
 
         public PlaceholderFragment() {
         }
+        TextView tv_name, tv_bikes, tv_address, tv_last_update;
+        ImageView iv_status;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -116,9 +122,26 @@ public class StationTab extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_station_tab, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
 
+            ArrayList<VelibStation> velibs = Stations.getInstance().getmArrayList();
+            int pos = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
+
+            tv_name = (TextView)rootView.findViewById(R.id.tv_name);
+            iv_status = (ImageView)rootView.findViewById(R.id.iv_status);
+            tv_bikes = (TextView)rootView.findViewById(R.id.tv_bikes);
+            tv_address = (TextView)rootView.findViewById(R.id.tv_address);
+            tv_last_update = (TextView)rootView.findViewById(R.id.tv_last_update);
+
+            tv_name.setText(velibs.get(pos).getFields().getName());
+            tv_bikes.setText(velibs.get(pos).getFields().getAvailable_bike_stands()
+            + "/" + velibs.get(pos).getFields().getBike_stands());
+            tv_address.setText(velibs.get(pos).getFields().getAddress());
+            tv_last_update.setText(velibs.get(pos).getFields().getLast_update());
+
+            if (velibs.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1).getFields().getStatus().equals("CLOSED"))
+                iv_status.setImageResource(android.R.drawable.presence_busy);
+            else if (velibs.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1).getFields().getAvailable_bikes() == 0)
+                iv_status.setImageResource(android.R.drawable.presence_away);
             return rootView;
         }
     }
@@ -142,8 +165,7 @@ public class StationTab extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return Stations.getInstance().getmArrayList().size();
         }
 
         @Override
