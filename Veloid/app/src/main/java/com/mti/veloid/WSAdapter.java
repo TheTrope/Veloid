@@ -26,6 +26,7 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
     public WSAdapter(ArrayList<VelibStation> arrayList) {
         mArrayList = arrayList;
         mFilteredList = arrayList;
+        Stations.getInstance().setmArrayList(mArrayList);
     }
 
     @Override
@@ -66,7 +67,6 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
                     ArrayList<VelibStation> filteredList = new ArrayList<>();
 
                     for (VelibStation velib : mArrayList) {
-
                         if (velib.getFields().getAddress().toLowerCase().contains(charString)) {
                             filteredList.add(velib);
                         }
@@ -101,16 +101,20 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    VelibStation velib = mArrayList.get(position);
+                    VelibStation velib = mFilteredList.get(position);
+                    int realPos = Stations.getInstance().getmArrayList().indexOf(velib);
 
                     Context context = v.getContext();
                     Intent intent = new Intent(context, StationTab.class);
-                    intent.putExtra("name", velib.getFields().getName());
+                    /*intent.putExtra("name", velib.getFields().getName());
                     intent.putExtra("status", velib.getFields().getStatus());
                     intent.putExtra("bike_stands", velib.getFields().getBike_stands());
                     intent.putExtra("available_bike_stands", velib.getFields().getAvailable_bike_stands());
                     intent.putExtra("address", velib.getFields().getAddress());
-                    intent.putExtra("last_update", velib.getFields().getLast_update());
+                    intent.putExtra("last_update", velib.getFields().getLast_update());*/
+
+                    intent.putExtra("position", realPos);
+
                     context.startActivity(intent);
                 }
             });
