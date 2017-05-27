@@ -76,9 +76,6 @@ public class StationTab extends AppCompatActivity {
 
                 // Attempt to start an activity that can handle the Intent
                 startActivity(mapIntent);
-
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        //.setAction("Action", null).show();
             }
         });
     }
@@ -96,11 +93,37 @@ public class StationTab extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch(item.getItemId()){
+            case R.id.action_about:
+                Intent intent = new Intent(StationTab.this, About.class);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                startActivity(intent);
+                return true;
+            case R.id.action_share: //TODO: Need to change the infos
+                /*int pos = mViewPager.getCurrentItem();
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+
+                String shareBody = Stations.getInstance().getmArrayList().get(pos).getFields().getName()
+                        +;
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Station Informations:");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));*/
+
+                 //TODO: WORK IN PROCESS HERE
+                int pos = mViewPager.getCurrentItem();
+                Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
+                // Create a Uri from an intent string. Use the result to create an Intent.
+                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
+
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                // IntentChooser?
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND, gmmIntentUri);
+                sharingIntent.setType("text/plain");
+                // Make the Intent explicit by setting the Google Maps package
+                sharingIntent.setPackage("com.google.android.apps.maps");
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,11 +138,11 @@ public class StationTab extends AppCompatActivity {
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
+        TextView tv_name, tv_bikes, tv_address, tv_last_update;
+        ImageView iv_status;
 
         public PlaceholderFragment() {
         }
-        TextView tv_name, tv_bikes, tv_address, tv_last_update;
-        ImageView iv_status;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -185,15 +208,10 @@ public class StationTab extends AppCompatActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
+            if (Stations.getInstance().getmArrayList().isEmpty())
+                return null;
+            else
+                return Stations.getInstance().getmArrayList().get(position).getFields().getName();
         }
     }
 }

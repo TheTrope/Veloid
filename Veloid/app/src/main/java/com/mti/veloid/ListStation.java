@@ -83,9 +83,6 @@ public class ListStation extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu_list_station, menu);
 
         MenuItem search = menu.findItem(R.id.search);
-        MenuItem about = menu.findItem(R.id.about);
-        //ActionMenuView actionMenuView = (ActionMenuView) MenuItemCompat.getActionView(about);
-        //about(actionMenuView);
 
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
         search(searchView);
