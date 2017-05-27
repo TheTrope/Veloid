@@ -1,9 +1,12 @@
 package com.mti.veloid;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.menu.ActionMenuItemView;
+import android.support.v7.widget.ActionMenuView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -15,6 +18,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +83,10 @@ public class ListStation extends AppCompatActivity{
         getMenuInflater().inflate(R.menu.menu_list_station, menu);
 
         MenuItem search = menu.findItem(R.id.search);
+        MenuItem about = menu.findItem(R.id.about);
+        //ActionMenuView actionMenuView = (ActionMenuView) MenuItemCompat.getActionView(about);
+        //about(actionMenuView);
+
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(search);
         search(searchView);
         return true;
@@ -86,7 +94,13 @@ public class ListStation extends AppCompatActivity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.about:
+                Intent intent = new Intent(ListStation.this, About.class);
 
+                startActivity(intent);
+                return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -107,4 +121,15 @@ public class ListStation extends AppCompatActivity{
             }
         });
     }
+    /*
+    private void about(final ActionMenuView actionMenuView) {
+        actionMenuView.setOnClickListener(new ActionMenuView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(ListStation.this, About.class);
+
+                startActivity(intent);
+            }
+        });
+    }*/
 }
