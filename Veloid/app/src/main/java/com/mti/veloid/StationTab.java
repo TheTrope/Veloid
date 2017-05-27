@@ -1,5 +1,7 @@
 package com.mti.veloid;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,8 +64,21 @@ public class StationTab extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                int pos = mViewPager.getCurrentItem();
+                Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
+                // Create a Uri from an intent string. Use the result to create an Intent.
+                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
+
+                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                // Make the Intent explicit by setting the Google Maps package
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Attempt to start an activity that can handle the Intent
+                startActivity(mapIntent);
+
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        //.setAction("Action", null).show();
             }
         });
     }
