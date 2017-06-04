@@ -27,19 +27,10 @@ import java.util.ArrayList;
 
 public class StationTab extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+
     private ViewPager mViewPager;
 
     @Override
@@ -50,10 +41,9 @@ public class StationTab extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setCurrentItem(getIntent().getIntExtra("position", 0));
@@ -66,15 +56,10 @@ public class StationTab extends AppCompatActivity {
             public void onClick(View view) {
                 int pos = mViewPager.getCurrentItem();
                 Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
-                // Create a Uri from an intent string. Use the result to create an Intent.
+
                 Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
-
-                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                // Make the Intent explicit by setting the Google Maps package
                 mapIntent.setPackage("com.google.android.apps.maps");
-
-                // Attempt to start an activity that can handle the Intent
                 startActivity(mapIntent);
             }
         });
@@ -83,16 +68,14 @@ public class StationTab extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu_station_tab, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         switch(item.getItemId()){
             case R.id.action_about:
                 Intent intent = new Intent(StationTab.this, About.class);
@@ -120,7 +103,6 @@ public class StationTab extends AppCompatActivity {
                 // IntentChooser?
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND, gmmIntentUri);
                 sharingIntent.setType("text/plain");
-                // Make the Intent explicit by setting the Google Maps package
                 sharingIntent.setPackage("com.google.android.apps.maps");
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 return true;
@@ -129,14 +111,9 @@ public class StationTab extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
+
     public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
         private static final String ARG_SECTION_NUMBER = "section_number";
         TextView tv_name, tv_bikes, tv_address, tv_last_update;
         ImageView iv_status;
@@ -144,10 +121,7 @@ public class StationTab extends AppCompatActivity {
         public PlaceholderFragment() {
         }
 
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -184,10 +158,7 @@ public class StationTab extends AppCompatActivity {
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {

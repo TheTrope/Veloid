@@ -30,6 +30,9 @@ public class VelibStation {
     public Fields getFields() {
         return fields;
     }
+    public String toString(){
+        return fields.toString();
+    }
 
     public void setFields(Fields fields) {
         this.fields = fields;
@@ -143,6 +146,22 @@ public class VelibStation {
 
         public void setPosition(Float[] position) {
             this.position = position;
+        }
+
+        public String toString(){
+            StringBuilder sb = new StringBuilder();
+            sb.append(name);
+            sb.append(" - ");
+            sb.append(status);
+            sb.append(" : ");
+            sb.append(address);
+            sb.append(" | ");
+            sb.append(available_bikes);
+            sb.append("available bikes and ");
+            sb.append(available_bike_stands);
+            sb.append("available stands");
+            return sb.toString();
+
         }
     }
 }
