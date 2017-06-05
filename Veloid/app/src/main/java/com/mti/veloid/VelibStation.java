@@ -6,6 +6,12 @@ import java.text.FieldPosition;
  * Created by TheTrope on 22/05/2017.
  */
 
+
+/**
+ * Define a VelibStation
+ * Fields are encapsulated on the field attribute
+ */
+
 public class VelibStation {
     private String datasetid;
     private String recordid;

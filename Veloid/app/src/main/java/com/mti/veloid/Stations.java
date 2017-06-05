@@ -6,6 +6,9 @@ import java.util.ArrayList;
  * Created by Brase-dev on 23/05/2017.
  */
 
+/**
+ * Define
+ */
 class Stations {
     private static final Stations ourInstance = new Stations();
 
