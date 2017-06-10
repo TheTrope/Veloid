@@ -26,9 +26,18 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Main view that display the list of stations
+ * -AppCompatActivity
+ *
+ */
+
 public class ListStation extends AppCompatActivity{
 
     public static final String BASE_URL = "https://opendata.paris.fr";
+
+
+
     private RecyclerView mRecyclerView;
     private ArrayList<VelibStation> mArrayList;
     private WSAdapter mAdapter;
@@ -67,6 +76,10 @@ public class ListStation extends AppCompatActivity{
                     mRecyclerView.setAdapter(mAdapter);
                 } else {
                     //Error
+                    // Manage it
+
+
+                    
                 }
             }
 

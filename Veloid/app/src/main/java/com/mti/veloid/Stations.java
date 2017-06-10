@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 /**
- * Define
+ * Singleton to store VelibStations as a "Model"
  */
 class Stations {
     private static final Stations ourInstance = new Stations();

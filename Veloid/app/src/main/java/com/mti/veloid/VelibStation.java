@@ -166,7 +166,10 @@ public class VelibStation {
             sb.append("available bikes and ");
             sb.append(available_bike_stands);
             sb.append("available stands");
+
             return sb.toString();
+
+
 
         }
     }

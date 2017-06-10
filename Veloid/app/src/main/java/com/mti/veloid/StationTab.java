@@ -134,6 +134,13 @@ public class StationTab extends AppCompatActivity {
             return fragment;
         }
 
+        /**
+         * Fill data
+         * @param inflater
+         * @param container
+         * @param savedInstanceState
+         * @return view
+         */
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
