@@ -36,8 +36,6 @@ public class ListStation extends AppCompatActivity{
 
     public static final String BASE_URL = "https://opendata.paris.fr";
 
-
-
     private RecyclerView mRecyclerView;
     private ArrayList<VelibStation> mArrayList;
     private WSAdapter mAdapter;
@@ -119,27 +117,19 @@ public class ListStation extends AppCompatActivity{
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (mArrayList == null || mArrayList.isEmpty())
+                {
+                    return true;
+                }
 
                 mAdapter.getFilter().filter(newText);
                 return true;
             }
         });
     }
-    /*
-    private void about(final ActionMenuView actionMenuView) {
-        actionMenuView.setOnClickListener(new ActionMenuView.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(ListStation.this, About.class);
-
-                startActivity(intent);
-            }
-        });
-    }*/
 }

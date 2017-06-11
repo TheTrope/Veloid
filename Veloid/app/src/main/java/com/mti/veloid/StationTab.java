@@ -1,5 +1,6 @@
 package com.mti.veloid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
@@ -61,10 +62,13 @@ public class StationTab extends AppCompatActivity {
                 int pos = mViewPager.getCurrentItem();
                 Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
 
-                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                startActivity(mapIntent);
+                Context context = view.getContext();
+                Intent mapIntent = new Intent(context, MapsActivity.class);
+
+                mapIntent.putExtra("latitude", position[0]);
+                mapIntent.putExtra("longitude", position[1]);
+
+                context.startActivity(mapIntent);
             }
         });
     }
@@ -86,29 +90,18 @@ public class StationTab extends AppCompatActivity {
 
                 startActivity(intent);
                 return true;
-            case R.id.action_share: //TODO: Need to change the infos
-                /*int pos = mViewPager.getCurrentItem();
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
+            case R.id.action_share:
 
-                String shareBody = Stations.getInstance().getmArrayList().get(pos).getFields().getName()
-                        +;
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Station Informations:");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
-                startActivity(Intent.createChooser(sharingIntent, "Share via"));*/
-
-                 //TODO: WORK IN PROCESS HERE
                 int pos = mViewPager.getCurrentItem();
-                Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
-                // Create a Uri from an intent string. Use the result to create an Intent.
-                Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
-
-                // Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
-                // IntentChooser?
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND, gmmIntentUri);
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                sharingIntent.setPackage("com.google.android.apps.maps");
-                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Station Informations:");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                        Stations.getInstance().getmArrayList().get(pos).toString());
+
+                if (sharingIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(Intent.createChooser(sharingIntent, "Share via"));
+                }
                 return true;
         }
 
@@ -121,6 +114,8 @@ public class StationTab extends AppCompatActivity {
         private static final String ARG_SECTION_NUMBER = "section_number";
         TextView tv_name, tv_bikes, tv_address, tv_last_update;
         ImageView iv_status;
+
+
 
         public PlaceholderFragment() {
         }
@@ -165,6 +160,17 @@ public class StationTab extends AppCompatActivity {
                 iv_status.setImageResource(android.R.drawable.presence_busy);
             else if (velibs.get(getArguments().getInt(ARG_SECTION_NUMBER) - 1).getFields().getAvailable_bikes() == 0)
                 iv_status.setImageResource(android.R.drawable.presence_away);
+
+            tv_address.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    int pos = getArguments().getInt(ARG_SECTION_NUMBER) - 1;
+                    Float[] position = Stations.getInstance().getmArrayList().get(pos).getFields().getPosition();
+                    Uri gmmIntentUri = Uri.parse("google.streetview:cbll=" + position[0] + "," + position[1]);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    startActivity(mapIntent);
+                }
+            });
             return rootView;
         }
     }

@@ -66,9 +66,11 @@ public class WSAdapter extends RecyclerView.Adapter<WSAdapter.ViewHolder> implem
 
                     ArrayList<VelibStation> filteredList = new ArrayList<>();
 
-                    for (VelibStation velib : mArrayList) {
-                        if (velib.getFields().getAddress().toLowerCase().contains(charString)) {
-                            filteredList.add(velib);
+                    if (mArrayList != null) {
+                        for (VelibStation velib : mArrayList) {
+                            if (velib.getFields().getAddress().toLowerCase().contains(charString)) {
+                                filteredList.add(velib);
+                            }
                         }
                     }
 

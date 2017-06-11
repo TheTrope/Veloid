@@ -1,7 +1,5 @@
 package com.mti.veloid;
 
-import java.text.FieldPosition;
-
 /**
  * Created by TheTrope on 22/05/2017.
  */
@@ -45,6 +43,7 @@ public class VelibStation {
     }
 
     public class Fields {
+
         private String status;
         private String contract_name;
         private String name;
@@ -163,14 +162,11 @@ public class VelibStation {
             sb.append(address);
             sb.append(" | ");
             sb.append(available_bikes);
-            sb.append("available bikes and ");
+            sb.append(" available bikes and ");
             sb.append(available_bike_stands);
-            sb.append("available stands");
+            sb.append(" available stands");
 
             return sb.toString();
-
-
-
         }
     }
 }
